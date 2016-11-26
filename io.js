@@ -4,10 +4,9 @@ const reader = readline.createInterface({
   output: process.stdout
 });
 
-function test() {
-  reader.question("Enter 1: ", function(answer1) {
-    reader.question("Enter 2: ", function(answer2) {
-      console.log(answer1, answer2);
-    });
+reader.question("Which site? ", function(site) {
+  reader.question("What jobs? ", function(job) {
+    console.log(site, job);
+    reader.close();
   });
-}
+});
