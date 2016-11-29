@@ -1,9 +1,7 @@
 require "selenium-webdriver"
 require "byebug"
 
-DRIVER = Selenium::WebDriver.for :chrome
-
-
+JOBS = File.readlines('jobs.txt')
 
 def click_link(link)
   link.click
@@ -18,19 +16,15 @@ def closeBrowser
 end
 
 def find_jobs
-  # byebug
-  DRIVER.find_element(id: "KeywordSearch").send_keys("software engineer")
-
-  sleep(2)
-
   location = DRIVER.find_element(id: "LocationSearch")
   location.clear
-
-  sleep(2)
+  sleep(1)
 
   location.send_keys("San Francisco, CA")
+  sleep(1)
+  DRIVER.find_element(id: "KeywordSearch").send_keys("#{JOBS[0]}")
 
-  sleep(2)
+  sleep(1)
 
   DRIVER.find_element(class: "search")
 end
@@ -65,7 +59,7 @@ def apply
   )
 end
 
-DRIVER.manage.timeouts.implicit_wait = 10
+DRIVER = Selenium::WebDriver.for :chrome
 DRIVER.get("https://www.glassdoor.com/index.htm")
 
 
@@ -75,5 +69,4 @@ sleep(2)
 clickJobs
 sleep(2)
 apply
-
 sleep(90000)
