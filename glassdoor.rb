@@ -66,7 +66,7 @@ def apply
 end
 
 DRIVER.manage.timeouts.implicit_wait = 10
-DRIVER.get("https://www.glassdoor.com/index.html")
+DRIVER.get("https://www.glassdoor.com/index.htm")
 
 
 sleep(2)
