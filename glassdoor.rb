@@ -1,4 +1,4 @@
-require "selenium-webDriver"
+require "selenium-webdriver"
 require "byebug"
 
 DRIVER = Selenium::WebDriver.for :chrome
