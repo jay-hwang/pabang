@@ -36,21 +36,27 @@ end
 
 def clickJobs
   job_listings = DRIVER.find_elements(class: 'jobListing')
+  company = DRIVER.find_elements(css: 'span.showHH.inline.empName')
+  location = DRIVER.find_elements(css: 'span.small.location')
+  title = DRIVER.find_elements(css: 'span.title')
 
   job_listings.each.with_index do |listing, i|
     listing.click
 
-    sleep(1)
+    sleep(3)
 
     DRIVER.find_element(class: 'mfp-close').click if i == 0
 
-    title = DRIVER.find_element(class: 'noMargTop').attribute('innerHTML')
-    company = DRIVER.find_element(class: 'plain').attribute('innerHTML')
+    description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
     # industry = DRIVER.find_element(class: 'i-ind').attribute('innerHTML')
-    # description = DRIVER.find_element(class: 'jobDesc').attribute('innerHTML')
 
-    puts "this is title: #{title}"
-    puts "this is company: #{company}"
+    puts "title: #{title[i].text}"
+    puts "company: #{company[i].attribute('innerHTML')}"
+    puts "location: #{location[i].attribute('innerHTML')}"
+    puts "description: #{description[i].text}"
+
+    # puts "this is title: #{title}"
+    # puts "this is company: #{company}"
     # puts "this is industry: #{industry}"
     # puts "this is description: #{description}"
   end
