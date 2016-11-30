@@ -1,7 +1,7 @@
-node_modules
 .byebug_history
 Gemfile
-jobs.txt
-keywords.txt
-location.txt
+node_modules
 sites.txt
+location.txt
+keywords.txt
+jobs.txt
