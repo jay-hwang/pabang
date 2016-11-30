@@ -26,34 +26,40 @@ def find_jobs
 
   sleep(1)
 
-  DRIVER.find_element(class: "search")
+  DRIVER.find_element(class: "search").click
 end
 
-def clickJobs
+def click_jobs
   job_listings = DRIVER.find_elements(class: 'applyText')
 
-  first_job = job_listings.first
+  job_listings.each_with_index do |job_listing, index|
+    puts "This is job_listing #{index}"
+    job_listing.click
 
-  first_job.click
+    sleep(1)
 
-  sleep(2)
+    DRIVER.find_element(class: 'mfp-close').click if index == 0
 
-  DRIVER.find_element(class: 'mfp-close').click
+    sleep(1)
 
-  sleep(2)
+byebug
+    apply_button = DRIVER.find_element(class: 'ezApplyBtn')
+    apply_button.click
 
-  apply_button = DRIVER.find_element(class: 'ezApplyBtn')
+    sleep(1)
 
-  sleep(2)
+    apply
 
-  apply_button.click
+    sleep(2)
+  end
+
 end
 
 def apply
   DRIVER.find_element(id: 'ApplicantName').send_keys('John Doe')
-  sleep(5)
+  sleep(1)
   DRIVER.find_element(id: 'ApplicantEmail').send_keys('john_doe@gmail.com')
-  sleep(5)
+  sleep(1)
   DRIVER.find_element(name: 'coverLetterHTML').send_keys(
     'This is my cover letter.'
   )
@@ -62,11 +68,10 @@ end
 DRIVER = Selenium::WebDriver.for :chrome
 DRIVER.get("https://www.glassdoor.com/index.htm")
 
+sleep(7)
 
 sleep(2)
-find_jobs.click
+find_jobs
 sleep(2)
-clickJobs
-sleep(2)
-apply
+click_jobs
 sleep(90000)
