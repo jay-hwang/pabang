@@ -27,8 +27,36 @@ end
 
 def get_job_info
   job_listings = DRIVER.find_elements(class: 'jobListing')
-  companies = DRIVER.find_elements(css: 'span.showHH.inline.empName')
-  locations = DRIVER.find_elements(css: 'span.small.location')
+  company = DRIVER.find_elements(css: 'span.showHH.inline.empName')
+  location = DRIVER.find_elements(css: 'span.small.location')
+  title = DRIVER.find_elements(css: 'span.title')
+
+  job_listings.each.with_index do |listing, i|
+    listing.click
+
+    sleep(3)
+
+    DRIVER.find_element(class: 'mfp-close').click if i == 0
+
+    description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
+
+    puts "title: #{title[i].text}"
+    puts "company: #{company[i].attribute('innerHTML')}"
+    puts "location: #{location[i].attribute('innerHTML')}"
+    puts "description: #{description[i].text}"
+
+  end
+
+end
+
+def apply
+  DRIVER.find_element(id: 'ApplicantName').send_keys('John Doe')
+  sleep(5)
+  DRIVER.find_element(id: 'ApplicantEmail').send_keys('john_doe@gmail.com')
+  sleep(5)
+  DRIVER.find_element(name: 'coverLetterHTML').send_keys(
+    'This is my cover letter.'
+  )
 end
 
 DRIVER = Selenium::WebDriver.for :chrome
