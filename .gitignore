@@ -1,0 +1,7 @@
+node_modules
+.byebug_history
+Gemfile
+jobs.txt
+keywords.txt
+location.txt
+sites.txt
