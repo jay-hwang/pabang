@@ -34,7 +34,7 @@ def get_job_info
   job_listings.each.with_index do |listing, i|
     listing.click
 
-    sleep(3)
+    sleep(1)
 
     DRIVER.find_element(class: 'mfp-close').click if i == 0
 
