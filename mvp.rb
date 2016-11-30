@@ -3,10 +3,6 @@ require "byebug"
 
 JOBS = File.readlines('jobs.txt')
 
-def click_link(link)
-  link.click
-end
-
 def handle_failure(err)
   puts "Something went wrong\n"
 end
@@ -16,25 +12,20 @@ def closeBrowser
 end
 
 def find_jobs
-  # byebug
-  # DRIVER.find_element(id: "KeywordSearch").send_keys("software engineer")
-
-
-
   location = DRIVER.find_element(id: "LocationSearch")
   location.clear
-  sleep(2)
+  sleep(1)
 
   location.send_keys("San Francisco, CA")
-  sleep(2)
+  sleep(1)
   DRIVER.find_element(id: "KeywordSearch").send_keys("#{JOBS[0]}")
 
-  sleep(2)
+  sleep(1)
 
   DRIVER.find_element(class: "search")
 end
 
-def clickJobs
+def get_job_info
   job_listings = DRIVER.find_elements(class: 'jobListing')
   company = DRIVER.find_elements(css: 'span.showHH.inline.empName')
   location = DRIVER.find_elements(css: 'span.small.location')
@@ -48,17 +39,12 @@ def clickJobs
     DRIVER.find_element(class: 'mfp-close').click if i == 0
 
     description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
-    # industry = DRIVER.find_element(class: 'i-ind').attribute('innerHTML')
 
     puts "title: #{title[i].text}"
     puts "company: #{company[i].attribute('innerHTML')}"
     puts "location: #{location[i].attribute('innerHTML')}"
     puts "description: #{description[i].text}"
 
-    # puts "this is title: #{title}"
-    # puts "this is company: #{company}"
-    # puts "this is industry: #{industry}"
-    # puts "this is description: #{description}"
   end
 
 end
@@ -73,21 +59,13 @@ def apply
   )
 end
 
-# Title: noMargTop margBotSm strong (class)
-# Company name: empDetailsLink (class)
-# Industry: i-ind (class)
-# Description: jobDesc (class)
-
-
-
 DRIVER = Selenium::WebDriver.for :chrome
 DRIVER.get("https://www.glassdoor.com/index.htm")
 
 sleep(10)
 
-sleep(2)
+sleep(1)
 find_jobs.click
-sleep(2)
-clickJobs
-sleep(2)
+sleep(1)
+get_job_info
 sleep(90000)
