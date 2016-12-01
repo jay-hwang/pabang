@@ -8,31 +8,31 @@ Created by Humza Baig, Jay Hwang, and Michael Pak.
 
 ### Instructions
 
-Before beginning, make sure you have ruby 2.3.1 installed on your machine.
+Before beginning, please have Ruby 2.3.1. installed on your machine.
 
 1. Download the project folder
 
-2. At the command line, navigate to the root directory of the project
+2. On command line, navigate to the root directory of the project folder
 
 3. type `bundle install` followed by `ruby sites/glassdoor.rb`
 
-4. Follow the instructions to answer a few questions
+4. Follow instructions and answer few questions
 
 5. Watch as Pabang crawls, and scrapes job listings
 
-6. After completion(may take some time), open up the `Summary.txt` file
+6. After completion (completion time may vary), open up the `Summary.txt` file
 
 ### Description
 
-The user inputs keywords that trigger their corresponding action:
+The user input keywords that trigger their corresponding action:
 
 [Keyword] Search Criteria
-- The script takes a couple keywords, including a desired job, ex. [Software Engineer, Back-end, Front-end, Full Stack], and the location, ex. [San Francisco, CA] which is saved and injected into the website's search bar. The webcrawler then saves all relevant job postings within the website.
+- The script take keywords, including desired job position ex.[Software Engineer, Back-end, Front-end, Full Stack], and location ex.[San Francisco, CA] which is saved and injected into the website's search bar. The webcrawler then saves all relevant job postings within the website.
 
 ![questions](docs/questions.png)
 
 [Index] Job Postings List
-- The script parses through the results and stores relevant information related to the job posting ex. (Title of Job, Relevant Dates, Location). With the gathered information, the script will display a user-friendly list of all job postings that met the search criteria.
+- The script parses through the results and stores relevant information related to the job posting ex. (Title of Job, Relevant Dates, Location). With the gathered information, the script will display a user-friendly list of all job postings that meet the search criteria.
 
 ![summary](docs/summary.png)
 

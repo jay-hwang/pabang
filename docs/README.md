@@ -21,44 +21,44 @@ The user inputs keywords that trigger their corresponding action:
 
 ### Functionality & MVP
 
- With this application, users will be able to:
+With this application, users will be able to:
 
- - [X] Go to [keyword] URL specified by user
- - [X] Search job postings within URL w/ keywords specified by user
- - [X] Parse all job postings
- - [X] Display summary of keywords to job postings
+- [X] Go to [keyword] URL specified by user
+- [X] Search job postings within URL w/ keywords specified by user
+- [X] Parse all job postings
+- [X] Display summary of keywords to job postings
 
- ### Technologies & Technical Challenges
+### Technologies & Technical Challenges
 
- This application will be implemented using the Selenium webdriver, and Ruby, for user-friendly input/output.
+This application will be implemented using the Selenium webdriver, and Ruby, for user-friendly input/output.
 
- Primary Technical Challenges:
+Primary Technical Challenges:
 
- - Teaching the script to grab specified HTML elements and inject user keywords
- - Script customization based upon website design [Glassdoor, Hired, LinkedIn] including different website layout, possible user sign-in functionality, and daily modifications.
- - Parsing the data and displaying accurately in real-time
+- Teaching the script to grab specified HTML elements and inject user keywords
+- Script customization based upon website design [Glassdoor, Hired, LinkedIn] including different website layout, possible user sign-in functionality, and daily modifications
+- Parsing the data and displaying accurately in real-time
 
- ### Implementation Timeline
+### Implementation Timeline
 
- # Day 1 - Day 2
-  - Learn the basics of Selenium and become familiar with API. Learning how to utilize Git in a small group working on the same project. Goals for Days 1 and 2:
-    * [X] Learn the basics of Selenium
-    * [X] Learn effective Github workflow
+##### Day 1 - Day 2
+- Learn the basics of Selenium and become familiar with API. Learning how to utilize Git in a small group working on the same project. Goals for Days 1 and 2:
+  * [X] Learn the basics of Selenium
+  * [X] Learn effective Github workflow
 
- # Day 3
-  - Initial Pabang setup. Create necessary files including the basic skeleton of app. Goals for Days 3:
-     * [X] Write a basic terminal script asking for user input and writes and saves input into a separate text file for parsing
-     * [X] Allow users to input keywords for search criteria
+##### Day 3
+- Initial Pabang setup. Create necessary files including the basic skeleton of app. Goals for Days 3:
+   * [X] Write a basic terminal script asking for user input and writes and saves input into a separate text file for parsing
+   * [X] Allow users to input keywords for search criteria
 
- # Day 4
-  - Write logic to handle the actual web-crawling, search the specified sites for the user keywords, and saves each individual listing that matches the search criteria. Goals for Day 4:
-    * [X] Write logic for AI web-crawling
-    * [X] Create script logic to parse through websites, search for keywords, and save matches
+##### Day 4
+- Write logic to handle the actual web-crawling, search the specified sites for the user keywords, and saves each individual listing that matches the search criteria. Goals for Day 4:
+  * [X] Write logic for AI web-crawling
+  * [X] Create script logic to parse through websites, search for keywords, and save matches
 
- # Day 5
-  - Add styling and display info in a neat, organized manner. Goals for Day 5:
-    * [X] Clean/refactor code
-    * [X] Add styling
+##### Day 5
+- Add styling and display info in a neat, organized manner. Goals for Day 5:
+  * [X] Clean/refactor code
+  * [X] Add styling
 
 ### Additional Bonus
 
