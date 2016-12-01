@@ -42,18 +42,6 @@ def record_listing_details(filename)
   end
 end
 
-# method currently in progress
-def apply
-  DRIVER.find_element(id: 'ApplicantName').send_keys('John Doe')
-  sleep(5)
-  DRIVER.find_element(id: 'ApplicantEmail').send_keys('john_doe@gmail.com')
-  sleep(5)
-  DRIVER.find_element(name: 'coverLetterHTML').send_keys(
-    'This is my cover letter.'
-  )
-end
-
-
 SUMMARY_FILE = IOStream::create_file
 
 DRIVER.get("https://www.glassdoor.com/index.html")
@@ -61,5 +49,4 @@ sleep(3)
 search_jobs.click
 sleep(1)
 record_listing_details(SUMMARY_FILE)
-sleep(99999)
 result_file.close
