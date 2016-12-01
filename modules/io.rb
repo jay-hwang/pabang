@@ -1,5 +1,6 @@
-class IOStream
-  def self.input_sites
+module IOStream
+
+  def input_sites
     system "clear"
     puts "Please enter a keyword from the following sites [Glassdoor]"
     print ">> ".chomp
@@ -15,21 +16,21 @@ class IOStream
     end
   end
 
-  def self.input_positions
+  def input_positions
     puts "Please enter a position [ex. Software Engineer, Front-end, Back-end, Full-stack]"
     print ">> ".chomp
 
     user_position_choice = gets.chomp!
   end
 
-  def self.write_locations
+  def input_locations
     puts "Please enter a location [ex. San Francisco CA, Los Angeles CA]"
     print ">> ".chomp
 
     user_location_choice = gets.chomp!
   end
 
-  def self.input_keywords
+  def input_keywords
     puts "Please enter specific keywords [ex. Ruby, Python, Leadership]"
     puts "Type 'done' when you are finished to exit the prompt"
 
@@ -45,7 +46,7 @@ class IOStream
     user_keywords.join("\n")
   end
 
-  def self.create_file
+  def create_file
     filename = "Summary.txt"
     index = 1
 
@@ -54,10 +55,16 @@ class IOStream
       index += 1
     end
 
-    File.new(filename, "w+")
+    summary_file = File.new(filename, "w+")
+    summary_file.puts("Results Summary")
+    summary_file.puts("*********************************")
+    summary_file.puts("")
+    summary_file.close
+
+    filename
   end
 
-  def self.append_file(filename, input_array)
+  def append_file(filename, input_array)
     File.open(filename, "a") do |file|
       input_array.each do |input|
         file.puts(input)
@@ -67,7 +74,7 @@ class IOStream
   end
 
   # returns array of file's content
-  def self.read_file(filename)
+  def read_file(filename)
     file_content = []
     File.open(filename, 'r') do |file|
       file.each_line do |line|
@@ -79,6 +86,3 @@ class IOStream
     p file_content
   end
 end
-
-IOStream.append_file("Summary.txt", [3, 2, 3])
-IOStream.read_file("Summary.txt")

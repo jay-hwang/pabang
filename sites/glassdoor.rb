@@ -1,58 +1,48 @@
-require "selenium-webdriver"
-require "byebug"
+require_relative "../modules/selenium.rb"
+require_relative "../modules/io.rb"
 
-# JOBS = File.readlines('jobs.txt')
+include IOStream
+include Selenium
 
-def handle_failure(err)
-  puts "Something went wrong\n"
-end
+DRIVER = Selenium::DRIVER
 
-def closeBrowser
-  DRIVER.quit
-end
+def search_jobs
 
-def find_jobs
-  location = DRIVER.find_element(id: "LocationSearch")
-  location.clear
-  sleep(1)
+  location = IOStream::input_locations
+  position = IOStream::input_positions
 
-  location.send_keys("San Francisco, CA")
-  sleep(1)
-  DRIVER.find_element(id: "KeywordSearch").send_keys("software engineer")
+  location_input = DRIVER.find_element(id: "LocationSearch")
+  location_input.clear
+  location_input.send_keys(location)
 
-  sleep(1)
+  position_input = DRIVER.find_element(id: "KeywordSearch")
+  position_input.send_keys(position)
 
   DRIVER.find_element(class: "search")
 end
 
-def get_job_info
+def record_listing_details(filename)
   job_listings = DRIVER.find_elements(class: 'jobListing')
-  company = DRIVER.find_elements(css: 'span.showHH.inline.empName')
-  location = DRIVER.find_elements(css: 'span.small.location')
-  title = DRIVER.find_elements(css: 'span.title')
+  companies = DRIVER.find_elements(css: 'span.showHH.inline.empName')
+  locations = DRIVER.find_elements(css: 'span.small.location')
+  titles = DRIVER.find_elements(css: 'span.title')
 
   job_listings.each.with_index do |listing, i|
+
     listing.click
 
     sleep(3)
 
     DRIVER.find_element(class: 'mfp-close').click if i == 0
 
-    description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
+    descriptions = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
+    listing_details_array = [titles[i].text, companies[i].attribute('innerHTML'), locations[i].attribute('innerHTML'), descriptions[i].text, "*********************************"]
 
-    # puts "title: #{title[i].text}"
-    # puts "company: #{company[i].attribute('innerHTML')}"
-    # puts "location: #{location[i].attribute('innerHTML')}"
-    # puts "description: #{description[i].text}"
-
-    RESULT_FILE.puts("#{title[i].text}")
-    RESULT_FILE.puts("#{company[i].attribute('innerHTML')}")
-    RESULT_FILE.puts("#{location[i].attribute('innerHTML')}")
-    RESULT_FILE.puts("#{description[i].text}")
-    RESULT_FILE.puts("-------------------------")
+    IOStream::append_file(filename, listing_details_array)
   end
 end
 
+# method currently in progress
 def apply
   DRIVER.find_element(id: 'ApplicantName').send_keys('John Doe')
   sleep(5)
@@ -64,17 +54,12 @@ def apply
 end
 
 
-RESULT_FILE = File.new('results.txt', 'w+')
-RESULT_FILE.puts("Results Summary")
-RESULT_FILE.puts("***************")
-DRIVER = Selenium::WebDriver.for :chrome
-DRIVER.get("https://www.glassdoor.com/index.htm")
+SUMMARY_FILE = IOStream::create_file
 
-sleep(10)
-
+DRIVER.get("https://www.glassdoor.com/index.html")
+sleep(3)
+search_jobs.click
 sleep(1)
-find_jobs.click
-sleep(1)
-get_job_info
-sleep(90000)
+record_listing_details(SUMMARY_FILE)
+sleep(99999)
 result_file.close
