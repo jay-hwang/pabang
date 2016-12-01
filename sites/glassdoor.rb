@@ -49,5 +49,4 @@ sleep(3)
 search_jobs.click
 sleep(1)
 record_listing_details(SUMMARY_FILE)
-sleep(99999)
 result_file.close
