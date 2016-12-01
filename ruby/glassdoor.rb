@@ -67,21 +67,23 @@ def apply
   )
   sleep(1)
   gmail_signin
+
+  DRIVER.switch_to.window DRIVER.window_handles.first
+
+  byebug
+  # DRIVER.find_elements(class: 'rj-pi-Oc-Kc').select do |element|
+  #   byebug
+  # end
 end
 
 def gmail_signin
   glassdoor_window = DRIVER.window_handle
-sleep(1)
+
   DRIVER.find_element(id: 'GoogleDriveBtn').click
-sleep(1)
+
+  sleep(1) until DRIVER.window_handles.count == 2
+
   DRIVER.switch_to.window DRIVER.window_handles.last
-
-  puts "window handles: #{DRIVER.window_handles}"
-  puts "last: #{DRIVER.window_handles.last}"
-  puts("DRIVER.window_handle #{DRIVER.window_handle}")
-  puts("email_input: #{DRIVER.find_element(id: 'Email')}")
-
-  debugger
 
   email_input = DRIVER.find_element(id: 'Email')
   email_input.send_keys('jayhwang0121@gmail.com')
