@@ -51,9 +51,9 @@ end
 
 def apply
   DRIVER.find_element(id: 'ApplicantName').send_keys('John Doe')
-  sleep(5)
+  sleep(1)
   DRIVER.find_element(id: 'ApplicantEmail').send_keys('john_doe@gmail.com')
-  sleep(5)
+  sleep(1)
   DRIVER.find_element(name: 'coverLetterHTML').send_keys(
     'This is my cover letter.'
   )
