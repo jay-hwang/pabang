@@ -31,7 +31,7 @@ def record_listing_details(filename)
 
     listing.click
 
-    sleep(3)
+    sleep(1)
 
     DRIVER.find_element(class: 'mfp-close').click if i == 0
 

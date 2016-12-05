@@ -1,7 +1,12 @@
-require "selenium-webdriver"
+require_relative "../modules/selenium.rb"
+require_relative "../modules/io.rb"
 require "byebug"
 
-JOBS = File.readlines('jobs.txt')
+include IOStream
+include Selenium
+
+DRIVER = Selenium::DRIVER
+WAIT = Selenium::WebDriver::Wait.new(timeout: 60)
 
 def handle_failure(err)
   puts "Something went wrong\n"
@@ -11,26 +16,33 @@ def closeBrowser
   DRIVER.quit
 end
 
+def glassdoor_signin
+  signin
+end
+
 def find_jobs
-  location = DRIVER.find_element(id: "LocationSearch")
-  location.clear
-  sleep(1)
+  location = IOStream::input_locations
+  position = IOStream::input_positions
 
-  location.send_keys("San Francisco, CA")
-  sleep(1)
-  DRIVER.find_element(id: "KeywordSearch").send_keys("#{JOBS[0]}")
+  location_input = DRIVER.find_element(id: "LocationSearch")
+  location_input.clear
+  location_input.send_keys("San Francisco, CA")
 
-  sleep(1)
+  position_input = DRIVER.find_element(id: "KeywordSearch")
+  position_input.send_keys(position)
 
   DRIVER.find_element(class: "search")
 end
 
 def get_job_info
-  # job_listings = DRIVER.find_elements(class: 'jobListing')
+  # glassdoor_job_listings selects only the listings where you can apply
+  # directly through glassdoor
   glassdoor_job_listings = DRIVER.find_elements(class: 'applyText')
-  company = DRIVER.find_elements(css: 'span.showHH.inline.empName')
-  location = DRIVER.find_elements(css: 'span.small.location')
-  title = DRIVER.find_elements(css: 'span.title')
+
+  # job_listings = DRIVER.find_elements(class: 'jobListing')
+  companies= DRIVER.find_elements(css: 'span.showHH.inline.empName')
+  locations = DRIVER.find_elements(css: 'span.small.location')
+  titles = DRIVER.find_elements(css: 'span.title')
 
   glassdoor_job_listings.each.with_index do |listing, i|
     break if i > 0
@@ -41,15 +53,13 @@ def get_job_info
 
     DRIVER.find_element(class: 'mfp-close').click if i == 0
 
-    description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
+    description = DRIVER.find_elements(
+      css: 'div.jobDescriptionContent.desc'
+    )
 
     sleep(1)
 
     DRIVER.find_element(class: 'ezApplyBtn').click
-    # puts "title: #{title[i].text}"
-    # puts "company: #{company[i].attribute('innerHTML')}"
-    # puts "location: #{location[i].attribute('innerHTML')}"
-    # puts "description: #{description[i].text}"
 
     sleep(1)
     apply
@@ -70,10 +80,15 @@ def apply
 
   DRIVER.switch_to.window DRIVER.window_handles.first
 
+byebug
+
+  resume_select = DRIVER.find_element(id: "ExistingResumeSelectBoxIt")
+  resume_select.click
+  sleep(1)
+  resume_file = DRIVER.find_element(data_val: "resume.pdf")
+  resume_file.click
+
   byebug
-  # DRIVER.find_elements(class: 'rj-pi-Oc-Kc').select do |element|
-  #   byebug
-  # end
 end
 
 def gmail_signin
@@ -86,18 +101,15 @@ def gmail_signin
   DRIVER.switch_to.window DRIVER.window_handles.last
 
   email_input = DRIVER.find_element(id: 'Email')
-  email_input.send_keys('jayhwang0121@gmail.com')
+  email_input.send_keys('')
   next_button = DRIVER.find_element(id: 'next')
   next_button.click
   sleep(1)
   password_input = DRIVER.find_element(id: 'Passwd')
-  password_input.send_keys('name1ess')
+  password_input.send_keys('')
   signin_button = DRIVER.find_element(id: 'signIn')
   signin_button.click
 end
-
-DRIVER = Selenium::WebDriver.for :chrome
-WAIT = Selenium::WebDriver::Wait.new(timeout: 60)
 
 DRIVER.get("https://www.glassdoor.com/index.htm")
 
