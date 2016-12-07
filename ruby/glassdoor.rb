@@ -38,11 +38,26 @@ def glassdoor_signin
 
   signin_button = DRIVER.find_element(id: 'signInBtn')
   signin_button.click
+
+  # Add logic to handle incorrect login info. These two blocks aren't working
+  # if DRIVER.find_element(class: 'error')
+  #   puts "Your login information was incorrect. Please try again"
+  #   byebug
+  #   glassdoor_signin
+  # end
+
+  # begin
+  #   DRIVER.find_element(class: 'error')
+  #   puts "Your login information was incorrect. Please try again"
+  #   glassdoor_signin
+  # rescue
+  #   return
+  # end
 end
 
 def search_jobs
-  location = IOStream::input_locations
-  position = IOStream::input_positions
+  location = "San Francisco, CA" # IOStream::input_locations
+  position = "Software Engineer" # IOStream::input_positions
 
   location_input = DRIVER.find_element(id: "LocationSearch")
   location_input.clear
@@ -59,13 +74,18 @@ def get_job_info
   # directly through glassdoor
   glassdoor_job_listings = DRIVER.find_elements(class: 'applyText')
 
+  # job_listings = DRIVER.find_elements(class: 'jobListing')
+  companies = DRIVER.find_elements(css: 'span.showHH.inline.empName')
+  locations = DRIVER.find_elements(css: 'span.small.location')
+  titles    = DRIVER.find_elements(css: 'span.title')
+
   glassdoor_job_listings.each.with_index do |listing, index|
     # break the loop if it reaches the end of the listings
     break if index >= glassdoor_job_listings.count
 
     listing.click
 
-    sleep(1)
+    sleep(2)
 
     begin
       ez_apply_button = DRIVER.find_element(class: 'ezApplyBtn')
@@ -75,7 +95,15 @@ def get_job_info
       next
     end
 
+    # Get current job position and skip if it contains 'Senior'
+    # job_position = titles[index].text
+    # next if job_position.match(/senior/i)
+
     sleep(1)
+
+    # May not need this line of code because there is no pop up if you
+    # are logged in.
+    # DRIVER.find_element(class: 'mfp-close').click if i == 0
 
     description = DRIVER.find_elements(
       css: 'div.jobDescriptionContent.desc'
@@ -104,7 +132,6 @@ def apply
   email_input = DRIVER.find_element(id: 'ApplicantEmail')
   coverletter_input = DRIVER.find_element(id: 'ApplicantCoverLetter')
 
-  # Fills out application form
   name_input.clear
   name_input.send_keys(name)
   email_input.clear
@@ -120,6 +147,8 @@ def apply
     xpath: '//*[@id="ExistingResumeSelectBoxItOptions"]/li[2]'
   )
   resume_file.click
+
+  byebug
 
   # This line will submit the application
   DRIVER.find_element(id: 'SubmitBtn').click

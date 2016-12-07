@@ -21,6 +21,8 @@ module IOStream
     print ">> ".chomp
 
     user_position_choice = gets.chomp!
+
+    user_position_choice
   end
 
   def input_locations
@@ -28,6 +30,8 @@ module IOStream
     print ">> ".chomp
 
     user_location_choice = gets.chomp!
+
+    user_location_choice
   end
 
   def input_keywords
@@ -44,6 +48,82 @@ module IOStream
     end
 
     user_keywords.join("\n")
+  end
+
+  def input_glassdoor_login
+    if File.file?('user_info/login_info.txt')
+      login_credentials = File.readlines('user_info/login_info.txt')
+      email = login_credentials[0]
+      password = login_credentials[1]
+
+      return [email, password]
+    end
+
+    puts "Please enter your Glassdoor account email."
+    print ">> ".chomp
+    email = gets.chomp!
+
+    puts "Please enter your Glassdoor account password."
+    puts "This will not give anyone access to your login credentials."
+    print ">> ".chomp
+    password = gets.chomp!
+
+    # Option to save login info
+    puts "Would you like to save your login info for future use?"
+    puts "This will not save your credentials to a database. It will simply write the credentials into a text file stored on your local machine under ./user_info/login_info.txt."
+    puts "Anything but 'yes' will not save your login info."
+    print ">> ".chomp
+    to_save = gets.chomp!
+
+    if to_save == 'yes'
+      login_info_file = File.new('user_info/login_info.txt', "w+")
+      login_info_file.puts(email)
+      login_info_file.puts(password)
+    end
+
+    [email, password]
+  end
+
+  def input_name_email
+    if File.file?('user_info/user_info.txt')
+      user_info_file = File.readlines('user_info/user_info.txt')
+      name = user_info_file[0]
+      email = user_info_file[1]
+
+      return [name, email]
+    end
+
+    puts "Please enter your full name."
+    print ">> ".chomp
+    name = gets.chomp!
+
+    puts "Please enter your email."
+    print ">> ".chomp
+    email = gets.chomp!
+
+    user_info_file = File.new('user_info/user_info.txt', 'w+')
+    user_info_file.puts(name)
+    user_info_file.puts(email)
+    user_info_file.close
+
+    [name, email]
+  end
+
+  def input_coverletter
+    if File.file?('user_info/coverletter.txt')
+      coverletter_file = File.read_file('user_info/coverletter.txt')
+      return coverletter_file
+    end
+
+    puts "Please enter your cover letter."
+    print ">> ".chomp
+    coverletter = gets.chomp!
+
+    coverletter_file = File.new('user_info/coverletter.txt', 'w+')
+    coverletter_file.puts(coverletter)
+    coverletter_file.close
+
+    coverletter
   end
 
   def create_file
