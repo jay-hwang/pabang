@@ -59,11 +59,11 @@ module IOStream
       return [email, password]
     end
 
-    puts "Please enter your glassdoor account email."
+    puts "Please enter your Glassdoor account email."
     print ">> ".chomp
     email = gets.chomp!
 
-    puts "Please enter your glassdoor account password."
+    puts "Please enter your Glassdoor account password."
     puts "This will not give anyone access to your login credentials."
     print ">> ".chomp
     password = gets.chomp!
@@ -115,7 +115,7 @@ module IOStream
       return coverletter_file
     end
 
-    puts "Please enter your cover letter"
+    puts "Please enter your cover letter."
     print ">> ".chomp
     coverletter = gets.chomp!
 
