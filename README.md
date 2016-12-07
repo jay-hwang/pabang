@@ -16,7 +16,7 @@ Before beginning, please have Ruby 2.3.1. installed on your machine, and make su
 
 3. type `bundle install` followed by `ruby sites/glassdoor.rb`
 
-4. You might be prompted by Glassdoor to complete a CAPTCHA when you first launch the program. You must complete the captcha, or the program will throw an error.
+4. You might be prompted by Glassdoor to complete a CAPTCHA when you first launch the program. You must complete the CAPTCHA, or the program will throw an error.
 
 5. In the terminal, you will be prompted to enter your Glassdoor login credentials so that the program can apply to jobs under your account.
 
