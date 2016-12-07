@@ -8,7 +8,7 @@ Created by Humza Baig, Jay Hwang, and Michael Pak.
 
 ### Instructions
 
-Before beginning, please have Ruby 2.3.1. installed on your machine.
+Before beginning, please have Ruby 2.3.1. installed on your machine, and make sure you have an glassdoor account with a resume uploaded under the name 'resume'.
 
 1. Download the project folder
 
@@ -16,11 +16,11 @@ Before beginning, please have Ruby 2.3.1. installed on your machine.
 
 3. type `bundle install` followed by `ruby sites/glassdoor.rb`
 
-4. Follow instructions and answer few questions
+4. You might be prompted by glassdoor to complete a captcha when you first launch the program. You must complete the captcha, or the program will throw an error.
 
-5. Watch as Pabang crawls, and scrapes job listings
+5. In the terminal, you will be prompted to enter your glassdoor login credentials so that the program can apply to jobs under your name.
 
-6. After completion (completion time may vary), open up the `Summary.txt` file
+6. Pabang will parse through the job listings, and if application through glassdoor is possible, it will apply for you. Otherwise, it will continue to parse until it finds another listing you can apply through glassdoor. If this is your first time running the program, you will be prompted in the terminal for your name and cover letter.
 
 ### Description
 
