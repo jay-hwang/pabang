@@ -2,7 +2,7 @@
 
 ### Background
 
-Pabang is a web browser automation script for Glassdoor that utilizes the Selenium webdriver.
+Pabang is a script that automates job applications utilizing Selenium WebDriver
 
 Created by Humza Baig, Jay Hwang, and Michael Pak.
 
@@ -20,7 +20,7 @@ Before beginning, please have Ruby 2.3.1. installed on your machine, and make su
 
 5. In the terminal, you will be prompted to enter your Glassdoor login credentials so that the program can apply to jobs under your account.
 
-6. Pabang will select the job listings you can apply through Glassdoor and apply for you. If it is the first time running the program, you will be prompted in the terminal for your application information. After the first application, your application info will be saved in a local file on your machine and you will not be prompted again. 
+6. Pabang will select the job listings you can apply through Glassdoor and apply for you. If it is the first time running the program, you will be prompted in the terminal for your application information. After the first application, your application info will be saved in a local file on your machine and you will not be prompted again.
 
 7. If you made a mistake and would like to change your credentials, simply navigate to the 'user_info/user_info.txt' text file and modify it accordingly. To change the cover letter, navigate to 'user_info/coverletter.txt' and modify it accordingly.
 

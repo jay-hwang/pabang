@@ -25,14 +25,12 @@ def glassdoor_signin
   signin_modal.click
 
   sleep(1)
-
   email, password = IOStream::input_glassdoor_login
 
   email_input = DRIVER.find_element(id: 'signInUsername')
   email_input.send_keys(email)
 
   sleep(1)
-
   password_input = DRIVER.find_element(id: 'signInPassword')
   password_input.send_keys(password)
 
@@ -55,38 +53,23 @@ def search_jobs
 end
 
 def get_job_info
-  # glassdoor_job_listings selects only the listings where you can apply
-  # directly through glassdoor
-  glassdoor_job_listings = DRIVER.find_elements(class: 'applyText')
+  # Glassdoor's easy apply element changes between these two selectors
+  glassdoor_job_listings = DRIVER.find_elements(class: 'bolt')
+  if glassdoor_job_listings.count == 0
+    glassdoor_job_listings = DRIVER.find_elements(class: 'applyText')
+  end
 
   glassdoor_job_listings.each.with_index do |listing, index|
-    # break the loop if it reaches the end of the listings
     break if index >= glassdoor_job_listings.count
 
     listing.click
-
-    sleep(1)
-
-    begin
-      ez_apply_button = DRIVER.find_element(class: 'ezApplyBtn')
-    rescue
-      # if 'ezApplyBtn' cannot be found, you can't apply through glassdoor
-      # so skip the listing
-      next
-    end
-
-    sleep(1)
-
-    description = DRIVER.find_elements(
-      css: 'div.jobDescriptionContent.desc'
-    )
+    sleep(2)
+    description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
     ez_apply_button = DRIVER.find_element(class: 'ezApplyBtn')
-
     sleep(1)
-
     ez_apply_button.click
-
     sleep(1)
+
     apply
   end
 
@@ -102,15 +85,16 @@ def apply
 
   name_input = DRIVER.find_element(id: 'ApplicantName')
   email_input = DRIVER.find_element(id: 'ApplicantEmail')
-  coverletter_input = DRIVER.find_element(id: 'ApplicantCoverLetter')
+  coverletter_input = DRIVER.find_element(name: 'coverLetterHTML')
 
-  # Fills out application form
   name_input.clear
   name_input.send_keys(name)
   email_input.clear
   email_input.send_keys(email)
   coverletter_input.clear
   coverletter_input.send_keys(coverletter)
+
+  sleep(5)
 
   # Select resume to send
   resume_select = DRIVER.find_element(id: "ExistingResumeSelectBoxIt")

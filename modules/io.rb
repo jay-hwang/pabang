@@ -68,7 +68,12 @@ module IOStream
     print ">> ".chomp
     password = gets.chomp!
 
-    # Option to save login info
+    save_login?(email, password)
+
+    [email, password]
+  end
+
+  def save_login?(email, password)
     puts "Would you like to save your login info for future use?"
     puts "This will not save your credentials to a database. It will simply write the credentials into a text file stored on your local machine under ./user_info/login_info.txt."
     puts "Anything but 'yes' will not save your login info."
@@ -80,8 +85,6 @@ module IOStream
       login_info_file.puts(email)
       login_info_file.puts(password)
     end
-
-    [email, password]
   end
 
   def input_name_email
@@ -111,17 +114,27 @@ module IOStream
 
   def input_coverletter
     if File.file?('user_info/coverletter.txt')
-      coverletter_file = File.read_file('user_info/coverletter.txt')
-      return coverletter_file
+      coverletter = File.readlines('user_info/coverletter.txt')
+      coverletter = coverletter.map { |line| line.chomp! }.join(' ')
+      return coverletter
     end
 
-    puts "Please enter your cover letter."
-    print ">> ".chomp
-    coverletter = gets.chomp!
-
     coverletter_file = File.new('user_info/coverletter.txt', 'w+')
-    coverletter_file.puts(coverletter)
-    coverletter_file.close
+
+    puts "Please enter your cover letter (1000 words) (optional)."
+    puts "When you finish writing your cover letter, please type 'exit' followed by a semi-colon to exit the prompt. (ie: 'exit;')"
+    print ">> ".chomp
+    coverletter_line = gets.chomp!
+
+    until coverletter_line == 'exit;'
+      coverletter_file.puts(coverletter_line)
+      print ">> ".chomp
+      coverletter_line = gets.chomp!
+    end
+
+    coverletter = File.readlines(coverletter_file).map do |line|
+      line.chomp!
+    end.join(' ')
 
     coverletter
   end
