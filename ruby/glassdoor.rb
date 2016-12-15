@@ -74,18 +74,16 @@ def get_job_info
     glassdoor_job_listings = DRIVER.find_elements(class: 'applyText')
   end
 
-  # job_listings = DRIVER.find_elements(class: 'jobListing')
-  # companies = DRIVER.find_elements(css: 'span.showHH.inline.empName')
-  # locations = DRIVER.find_elements(css: 'span.small.location')
-  # titles    = DRIVER.find_elements(css: 'span.title')
-
   glassdoor_job_listings.each.with_index do |listing, index|
     break if index >= glassdoor_job_listings.count
 
     listing.click
     sleep(2)
-    description = DRIVER.find_elements(css: 'div.jobDescriptionContent.desc')
-    ez_apply_button = DRIVER.find_element(class: 'ezApplyBtn')
+    begin
+      ez_apply_button = DRIVER.find_element(class: 'ezApplyBtn')
+    rescue
+      next
+    end
     sleep(1)
     ez_apply_button.click
     sleep(1)
@@ -126,11 +124,18 @@ def apply
   resume_file.click
 
   # Add company name to list of 'applied_companies.txt' after successful application
+  # add_company()
 
   byebug
 
   # This line will submit the application
   DRIVER.find_element(id: 'SubmitBtn').click
+end
+
+def add_company(company)
+  File.open('user_info/applied_companies.txt', 'a') do |file|
+    file.puts(company)
+  end
 end
 
 DRIVER.get("https://www.glassdoor.com/index.htm")
